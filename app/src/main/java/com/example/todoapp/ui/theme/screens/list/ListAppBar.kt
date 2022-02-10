@@ -4,9 +4,12 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.todoapp.ui.theme.topAppBarBackgroundColor
 import com.example.todoapp.ui.theme.topAppBarContentColor
+import com.example.todoapp.R
+import com.example.todoapp.data.models.Priority
 
 @Composable
 fun ListAppBar(){
@@ -48,10 +51,17 @@ fun SearchAction(
     ) {
         Icon(
             imageVector = Icons.Filled.Search,
-            contentDescription ="Search Tasks",
+            contentDescription = stringResource(id = R.string.search_Action),
             tint = MaterialTheme.colors.topAppBarContentColor
         )
     }
+}
+
+@Composable
+fun SortAction(
+    onSortClicked: (Priority) -> Unit
+){
+
 }
 
 @Composable
