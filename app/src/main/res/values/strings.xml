@@ -2,6 +2,7 @@
     <string name="app_name">ToDo App</string>
 
     <string name="sort_Action">Sort Tasks</string>
+    <string name="delete_All_Action">Delete All</string>
     <string name="search_Action">Search Tasks</string>
     <string name="add_Button">Add Button</string>
 </resources>
