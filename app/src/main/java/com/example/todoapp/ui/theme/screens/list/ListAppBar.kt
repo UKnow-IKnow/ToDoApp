@@ -22,7 +22,7 @@ import com.example.todoapp.data.models.Priority
 import com.example.todoapp.ui.theme.Typography
 
 @Composable
-fun ListAppBar(){
+fun ListAppBar() {
     DefaultListAppBar(
         onSearchClicked = {},
         onSortClicked = {},
@@ -35,14 +35,15 @@ fun DefaultListAppBar(
     onSearchClicked: () -> Unit,
     onSortClicked: (Priority) -> Unit,
     onDeleteClicked: () -> Unit
-){
+) {
     TopAppBar(
         title = {
-            Text(text = "Tasks",
+            Text(
+                text = "Tasks",
                 color = MaterialTheme.colors.topAppBarContentColor
             )
         },
-        actions ={
+        actions = {
             ListAppBarActions(
                 onSearchClicked = onSearchClicked,
                 onSortClicked = onSortClicked,
@@ -58,18 +59,18 @@ fun ListAppBarActions(
     onSearchClicked: () -> Unit,
     onSortClicked: (Priority) -> Unit,
     onDeleteClicked: () -> Unit
-){
-    SearchAction (onSearchClicked = onSearchClicked)
+) {
+    SearchAction(onSearchClicked = onSearchClicked)
     SortAction(onSortClicked = onSortClicked)
-    DeleteAllAction (onDeleteClicked = onDeleteClicked )
+    DeleteAllAction(onDeleteClicked = onDeleteClicked)
 }
 
 @Composable
 fun SearchAction(
     onSearchClicked: () -> Unit
-){
+) {
     IconButton(
-        onClick = {onSearchClicked}
+        onClick = { onSearchClicked }
     ) {
         Icon(
             imageVector = Icons.Filled.Search,
@@ -82,25 +83,26 @@ fun SearchAction(
 @Composable
 fun SortAction(
     onSortClicked: (Priority) -> Unit
-){
+) {
 
-    var expended by remember { mutableStateOf(false)}
+    var expended by remember { mutableStateOf(false) }
 
     IconButton(
         onClick = { expended = true }
     ) {
-        Icon(painter = painterResource(id = R.drawable.ic_filter_list),
+        Icon(
+            painter = painterResource(id = R.drawable.ic_filter_list),
             contentDescription = stringResource(id = R.string.sort_Action),
             tint = MaterialTheme.colors.topAppBarContentColor
         )
         DropdownMenu(
             expanded = expended,
-            onDismissRequest = { expended = false}
+            onDismissRequest = { expended = false }
         ) {
             DropdownMenuItem(
                 onClick = {
                     expended = false
-                    onSortClicked (Priority.LOW)
+                    onSortClicked(Priority.LOW)
                 }
             ) {
                 PriorityItem(priority = Priority.LOW)
@@ -108,7 +110,7 @@ fun SortAction(
             DropdownMenuItem(
                 onClick = {
                     expended = false
-                    onSortClicked (Priority.HIGH)
+                    onSortClicked(Priority.HIGH)
                 }
             ) {
                 PriorityItem(priority = Priority.HIGH)
@@ -116,7 +118,7 @@ fun SortAction(
             DropdownMenuItem(
                 onClick = {
                     expended = false
-                    onSortClicked (Priority.NONE)
+                    onSortClicked(Priority.NONE)
                 }
             ) {
                 PriorityItem(priority = Priority.NONE)
@@ -128,25 +130,26 @@ fun SortAction(
 @Composable
 fun DeleteAllAction(
     onDeleteClicked: () -> Unit
-){
-    var expended by remember { mutableStateOf(false)}
+) {
+    var expended by remember { mutableStateOf(false) }
 
     IconButton(
-        onClick = { expended = true}
+        onClick = { expended = true }
     ) {
-       Icon(
-           painter = painterResource(id = R.drawable.ic_vertical_menu),
-           contentDescription = stringResource(id = R.string.delete_All_Action),
-           tint = MaterialTheme.colors.topAppBarContentColor
-       )
+        Icon(
+            painter = painterResource(id = R.drawable.ic_vertical_menu),
+            contentDescription = stringResource(id = R.string.delete_All_Action),
+            tint = MaterialTheme.colors.topAppBarContentColor
+        )
         DropdownMenu(
             expanded = expended,
-            onDismissRequest = {expended = false}
+            onDismissRequest = { expended = false }
         ) {
             DropdownMenuItem(
                 onClick = {
                     expended = false
-                    onDeleteClicked }
+                    onDeleteClicked
+                }
             ) {
                 Text(
                     modifier = Modifier
@@ -161,7 +164,7 @@ fun DeleteAllAction(
 
 @Composable
 @Preview
-private fun DefaultListAppbarPreview(){
+private fun DefaultListAppbarPreview() {
     DefaultListAppBar(
         onSearchClicked = {},
         onSortClicked = {},

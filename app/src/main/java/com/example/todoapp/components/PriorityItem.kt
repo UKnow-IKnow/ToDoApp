@@ -17,11 +17,11 @@ import com.example.todoapp.ui.theme.Typography
 @Composable
 fun PriorityItem(
     priority: Priority
-){
+) {
     Row(
         verticalAlignment = Alignment.CenterVertically
-    ){
-        Canvas(modifier = Modifier.size(16.dp)){
+    ) {
+        Canvas(modifier = Modifier.size(16.dp)) {
             drawCircle(color = priority.color)
         }
         Text(
@@ -36,6 +36,6 @@ fun PriorityItem(
 
 @Composable
 @Preview
-fun PriorityItemPreview(){
+fun PriorityItemPreview() {
     PriorityItem(priority = Priority.NONE)
 }

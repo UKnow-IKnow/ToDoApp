@@ -10,13 +10,13 @@ import com.example.todoapp.util.Constants.LIST_SCREEN
 
 fun NavGraphBuilder.listComposable(
     navigateToTaskScreen: (taskId: Int) -> Unit
-){
+) {
     composable(
         route = LIST_SCREEN,
-        arguments = listOf(navArgument(LIST_ARGUMENT_KEY){
+        arguments = listOf(navArgument(LIST_ARGUMENT_KEY) {
             type = NavType.StringType
         })
-    ){
+    ) {
         listScreen(navigateToTaskScreen = navigateToTaskScreen)
     }
 }
