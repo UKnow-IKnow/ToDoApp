@@ -2,6 +2,8 @@ package com.example.todoapp.ui.theme.screens.list
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -19,16 +21,32 @@ import com.example.todoapp.data.models.ToDoTask
 import com.example.todoapp.ui.theme.taskItemBackgroundColor
 import com.example.todoapp.ui.theme.taskItemTextColor
 
+@ExperimentalMaterialApi
 @Composable
-fun listContent() {
-
+fun listContent(
+    tasks: List<ToDoTask>,
+    navigateToTaskScreen: (taskId: Int) -> Unit
+) {
+    LazyColumn {
+        items(
+            items = tasks,
+            key = { task ->
+                task.id
+            }
+        ) { task ->
+            TaskItem(
+                toDoTask = task,
+                navigateToTaskScreen = navigateToTaskScreen
+            )
+        }
+    }
 }
 
 @ExperimentalMaterialApi
 @Composable
 fun TaskItem(
     toDoTask: ToDoTask,
-    navigateToDoTaskScreen: (taskId: Int) -> Unit
+    navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
     Surface(
         modifier = Modifier
@@ -37,7 +55,7 @@ fun TaskItem(
         shape = RectangleShape,
         elevation = 2.dp,
         onClick = {
-            navigateToDoTaskScreen(toDoTask.id)
+            navigateToTaskScreen(toDoTask.id)
         }
     ) {
         Column(
@@ -47,7 +65,7 @@ fun TaskItem(
         ) {
             Row {
                 Text(
-                    modifier =Modifier.weight(8f),
+                    modifier = Modifier.weight(8f),
                     text = toDoTask.title,
                     color = MaterialTheme.colors.taskItemTextColor,
                     style = MaterialTheme.typography.h5,
@@ -93,7 +111,6 @@ private fun TaskItemPreview() {
             title = "Title",
             description = "welcome to hell",
             priority = Priority.HIGH
-        ),
-        navigateToDoTaskScreen ={}
-    )
+        )
+    ) {}
 }
