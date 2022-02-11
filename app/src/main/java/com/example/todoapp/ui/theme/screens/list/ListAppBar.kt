@@ -29,14 +29,42 @@ import com.example.todoapp.R
 import com.example.todoapp.components.PriorityItem
 import com.example.todoapp.data.models.Priority
 import com.example.todoapp.ui.theme.Typography
+import com.example.todoapp.ui.theme.viewModels.SharedViewModel
+import com.example.todoapp.util.SearchAppBarState
 
 @Composable
-fun ListAppBar() {
-    DefaultListAppBar(
-        onSearchClicked = {},
-        onSortClicked = {},
-        onDeleteClicked = {}
-    )
+fun ListAppBar(
+    sharedViewModel: SharedViewModel,
+    searchAppBarState: SearchAppBarState,
+    searchTextState : String
+) {
+    when(searchAppBarState){
+        SearchAppBarState.CLOSED -> {
+            DefaultListAppBar(
+                onSearchClicked = {
+                    sharedViewModel.searchAppBarState.value =
+                        SearchAppBarState.OPENED
+                },
+                onSortClicked = {},
+                onDeleteClicked = {}
+            )
+        }
+        else -> {
+            SearchAppBar(
+                text = searchTextState,
+                onTextChange = {newText ->
+                    sharedViewModel.searchTextState.value = newText
+                } ,
+                onClosedClicked = {
+                    sharedViewModel.searchAppBarState.value =
+                        SearchAppBarState.CLOSED
+                    sharedViewModel.searchTextState.value = ""
+                },
+                onSearchClicked = {}
+            )
+        }
+    }
+
 }
 
 @Composable
