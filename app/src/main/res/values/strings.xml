@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">ToDo App</string>
 
+    <string name="close_icon">Close Icon</string>
+    <string name="search_icon">Search Icon</string>
+    <string name="search_placeholder">Search</string>
+    <string name="list_Screen_Title">Tasks</string>
     <string name="sort_Action">Sort Tasks</string>
     <string name="delete_All_Action">Delete All</string>
     <string name="search_Action">Search Tasks</string>
