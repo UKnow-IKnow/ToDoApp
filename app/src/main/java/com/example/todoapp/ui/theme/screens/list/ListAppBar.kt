@@ -31,6 +31,7 @@ import com.example.todoapp.data.models.Priority
 import com.example.todoapp.ui.theme.Typography
 import com.example.todoapp.ui.theme.viewModels.SharedViewModel
 import com.example.todoapp.util.SearchAppBarState
+import com.example.todoapp.util.TrailingIconState
 
 @Composable
 fun ListAppBar(
@@ -107,7 +108,7 @@ fun SearchAction(
     onSearchClicked: () -> Unit
 ) {
     IconButton(
-        onClick = { onSearchClicked }
+        onClick = { onSearchClicked () }
     ) {
         Icon(
             imageVector = Icons.Filled.Search,
@@ -205,6 +206,10 @@ fun SearchAppBar(
     onClosedClicked: () ->Unit,
     onSearchClicked: (String) -> Unit
 ){
+    var trailingIconState by remember {
+        mutableStateOf(TrailingIconState.READY_TO_DELETE)
+    }
+
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -248,7 +253,20 @@ fun SearchAppBar(
             trailingIcon = {
                 IconButton(
                     onClick = {
-                        onClosedClicked()
+                        when(trailingIconState){
+                            TrailingIconState.READY_TO_DELETE -> {
+                                onTextChange("")
+                                trailingIconState = TrailingIconState.READY_TO_CLOSE
+                            }
+                            TrailingIconState.READY_TO_CLOSE -> {
+                                if(text.isNotEmpty()){
+                                    onTextChange("")
+                                }else{
+                                    onClosedClicked()
+                                    trailingIconState = TrailingIconState.READY_TO_DELETE
+                                }
+                            }
+                        }
                     }
                 ) {
                     Icon(
