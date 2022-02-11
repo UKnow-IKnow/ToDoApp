@@ -27,7 +27,14 @@ fun listContent(
     tasks: List<ToDoTask>,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
-
+    if (tasks.isEmpty()){
+        EmptyContent()
+    }else {
+        DisplayTasks(
+            tasks = tasks,
+            navigateToTaskScreen = navigateToTaskScreen
+        )
+    }
 }
 
 @ExperimentalMaterialApi
