@@ -20,20 +20,23 @@ import com.example.todoapp.data.models.Priority
 import com.example.todoapp.data.models.ToDoTask
 import com.example.todoapp.ui.theme.taskItemBackgroundColor
 import com.example.todoapp.ui.theme.taskItemTextColor
+import com.example.todoapp.util.RequestState
 
 @ExperimentalMaterialApi
 @Composable
 fun listContent(
-    tasks: List<ToDoTask>,
+    tasks: RequestState<List<ToDoTask>>,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
-    if (tasks.isEmpty()){
-        EmptyContent()
-    }else {
-        DisplayTasks(
-            tasks = tasks,
-            navigateToTaskScreen = navigateToTaskScreen
-        )
+    if (tasks is RequestState.Success){
+        if (tasks.data.isEmpty()){
+            EmptyContent()
+        }else {
+            DisplayTasks(
+                tasks = tasks.data,
+                navigateToTaskScreen = navigateToTaskScreen
+            )
+        }
     }
 }
 
