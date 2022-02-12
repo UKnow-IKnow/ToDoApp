@@ -5,13 +5,18 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.todoapp.ui.theme.topAppBarBackgroundColor
 import com.example.todoapp.ui.theme.topAppBarContentColor
 import com.example.todoapp.util.Action
+import com.example.todoapp.R
+import androidx.compose.ui.res.stringResource
 
 @Composable
-fun TaskAppBar() {
-
+fun TaskAppBar(
+    navigateToListScreen: (Action) -> Unit
+) {
+    NewTaskAppBar(navigateToListScreen = navigateToListScreen)
 }
 
 @Composable
@@ -24,7 +29,7 @@ fun NewTaskAppBar(
         },
         title = {
             Text(
-                text = "Add Task",
+                text = stringResource(id = R.string.add_Task),
                 color = MaterialTheme.colors.topAppBarContentColor
             )
         },
@@ -42,7 +47,7 @@ fun BackAction(
     IconButton(onClick = { onBackClicked(Action.NO_ACTION) }) {
         Icon(
             imageVector = Icons.Filled.ArrowBack,
-            contentDescription = "Back Arrow",
+            contentDescription = stringResource(id = R.string.back_Arrow),
             tint = MaterialTheme.colors.topAppBarContentColor
         )
     }
@@ -55,8 +60,14 @@ fun AddAction(
     IconButton(onClick = { onAddClicked(Action.ADD) }) {
         Icon(
             imageVector = Icons.Filled.Check,
-            contentDescription = "Add Task",
+            contentDescription = stringResource(id = R.string.add_Task),
             tint = MaterialTheme.colors.topAppBarContentColor
         )
     }
+}
+
+@Composable
+@Preview
+fun NewTaskAppBarPreview(){
+    NewTaskAppBar(navigateToListScreen = {})
 }

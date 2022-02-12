@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">ToDo App</string>
 
+    <string name="back_Arrow">Back Arrow</string>
+    <string name="add_Task">Add Task</string>
     <string name="empty_Content">No Tasks Found.</string>
     <string name="break_up">Break up</string>
     <string name="close_icon">Close Icon</string>
