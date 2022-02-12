@@ -4,6 +4,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.todoapp.ui.theme.topAppBarBackgroundColor
@@ -11,6 +12,8 @@ import com.example.todoapp.ui.theme.topAppBarContentColor
 import com.example.todoapp.util.Action
 import com.example.todoapp.R
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
+import com.example.todoapp.data.models.ToDoTask
 
 @Composable
 fun TaskAppBar(
@@ -65,6 +68,45 @@ fun AddAction(
         )
     }
 }
+
+
+@Composable
+fun ExistingTaskAppBar(
+    selectedTask: ToDoTask,
+    navigateToListScreen : (Action) -> Unit
+) {
+    TopAppBar(
+        navigationIcon = {
+            CloseAction(onClosedClicked = navigateToListScreen)
+        },
+        title = {
+            Text(
+                text = selectedTask.title,
+                color = MaterialTheme.colors.topAppBarContentColor,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        },
+        backgroundColor = MaterialTheme.colors.topAppBarBackgroundColor,
+        actions = {
+
+        }
+    )
+}
+
+@Composable
+fun CloseAction(
+    onClosedClicked: (Action) -> Unit
+) {
+    IconButton(onClick = { onClosedClicked(Action.NO_ACTION) }) {
+        Icon(
+            imageVector = Icons.Filled.Close,
+            contentDescription = stringResource(id = R.string.close_icon),
+            tint = MaterialTheme.colors.topAppBarContentColor
+        )
+    }
+}
+
 
 @Composable
 @Preview
