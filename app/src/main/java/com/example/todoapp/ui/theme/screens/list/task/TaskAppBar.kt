@@ -14,6 +14,7 @@ import com.example.todoapp.util.Action
 import com.example.todoapp.R
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import com.example.todoapp.data.models.Priority
 import com.example.todoapp.data.models.ToDoTask
 
 @Composable
@@ -90,7 +91,8 @@ fun ExistingTaskAppBar(
         },
         backgroundColor = MaterialTheme.colors.topAppBarBackgroundColor,
         actions = {
-
+            DeleteAction(onDeleteClicked = navigateToListScreen)
+            UpdateAction(onUpdateClicked = navigateToListScreen)
         }
     )
 }
@@ -121,9 +123,36 @@ fun DeleteAction(
     }
 }
 
+@Composable
+fun UpdateAction(
+    onUpdateClicked: (Action) -> Unit
+) {
+    IconButton(onClick = { onUpdateClicked(Action.UPDATE) }) {
+        Icon(
+            imageVector = Icons.Filled.Check,
+            contentDescription = stringResource(id = R.string.update_Icon),
+            tint = MaterialTheme.colors.topAppBarContentColor
+        )
+    }
+}
+
 
 @Composable
 @Preview
 fun NewTaskAppBarPreview(){
     NewTaskAppBar(navigateToListScreen = {})
+}
+
+@Composable
+@Preview
+fun ExistingTaskAppBarPreview(){
+    ExistingTaskAppBar(
+        selectedTask = ToDoTask(
+            id = 0,
+            title = "Saroj",
+            description = "Welcome to Hell",
+            priority = Priority.HIGH
+        ),
+        navigateToListScreen = {}
+    )
 }
