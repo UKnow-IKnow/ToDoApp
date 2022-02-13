@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">ToDo App</string>
 
+    <string name="dropDown_Arrow_Icon">Drop-Down Arrow Icon</string>
     <string name="update_Icon">Update Icon</string>
     <string name="delete_Icon">Delete Icon</string>
     <string name="back_Arrow">Back Arrow</string>
