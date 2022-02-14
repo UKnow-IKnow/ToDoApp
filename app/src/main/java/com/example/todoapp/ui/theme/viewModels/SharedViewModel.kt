@@ -58,4 +58,18 @@ class SharedViewModel @Inject constructor(
             }
         }
     }
+
+    fun updateTaskField(selectedTask: ToDoTask?){
+        if (selectedTask != null){
+            id.value = selectedTask.id
+            title.value = selectedTask.title
+            description.value = selectedTask.description
+            priority.value = selectedTask.priority
+        } else{
+            id.value = 0
+            title.value = ""
+            description.value = ""
+            priority.value = Priority.LOW
+        }
+    }
 }
