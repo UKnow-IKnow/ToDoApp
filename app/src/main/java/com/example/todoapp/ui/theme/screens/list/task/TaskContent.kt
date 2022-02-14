@@ -1,10 +1,9 @@
 package com.example.todoapp.ui.theme.screens.list.task
 
 import android.accounts.AuthenticatorDescription
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -29,6 +28,7 @@ fun TaskContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colors.background)
             .padding(10.dp)
     ) {
         OutlinedTextField(
@@ -38,6 +38,10 @@ fun TaskContent(
             label = { Text(text = stringResource(id = R.string.title))},
             textStyle = MaterialTheme.typography.body1,
             singleLine = true
+        )
+        Divider(
+            modifier = Modifier.height(8.dp),
+            color = MaterialTheme.colors.background
         )
         PriorityDropDown(
             priority = priority,
