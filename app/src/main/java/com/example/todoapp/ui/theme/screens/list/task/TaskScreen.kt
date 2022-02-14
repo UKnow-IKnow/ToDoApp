@@ -23,7 +23,9 @@ fun TaskScreen(
         topBar = {
             TaskAppBar(
                 selectedTask = selectedTask,
-                navigateToListScreen = navigateToListScreen
+                navigateToListScreen = { action ->
+
+                }
             )
         },
         content = {
