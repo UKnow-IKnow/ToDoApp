@@ -11,8 +11,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.todoapp.R
+import com.example.todoapp.components.PriorityDropDown
 import com.example.todoapp.data.models.Priority
 
 @Composable
@@ -37,6 +39,30 @@ fun TaskContent(
             textStyle = MaterialTheme.typography.body1,
             singleLine = true
         )
-
+        PriorityDropDown(
+            priority = priority,
+            onPrioritySelected = onPrioritySelected
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxSize(),
+            value = description,
+            onValueChange = {onDescriptionChange(it)},
+            label = { Text(text = stringResource(id =R.string.description))},
+            textStyle = MaterialTheme.typography.body1
+        )
     }
+}
+
+
+@Composable
+@Preview
+private fun TaskContentPreview(){
+    TaskContent(
+        title = "",
+        onTitleChange = {},
+        description = "",
+        onDescriptionChange = {},
+        priority = Priority.HIGH,
+        onPrioritySelected = {}
+    )
 }
