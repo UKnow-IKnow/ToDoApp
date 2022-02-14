@@ -29,6 +29,7 @@ fun NavGraphBuilder.taskComposable(
         
         TaskScreen(
             selectedTask = selectedTask,
+            sharedViewModel = sharedViewModel,
             navigateToListScreen = navigateToListScreen
         )
     }

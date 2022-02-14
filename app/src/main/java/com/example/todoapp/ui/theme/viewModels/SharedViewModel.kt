@@ -4,6 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.todoapp.data.models.Priority
 import com.example.todoapp.data.models.ToDoTask
 import com.example.todoapp.data.models.repositories.ToDoRepository
 import com.example.todoapp.util.RequestState
@@ -20,14 +21,17 @@ class SharedViewModel @Inject constructor(
     private val repository: ToDoRepository
 ) : ViewModel() {
 
+    val id: MutableState<Int> = mutableStateOf(0)
+    val title: MutableState<String> = mutableStateOf("")
+    val description: MutableState<String> = mutableStateOf("")
+    val priority: MutableState<Priority> = mutableStateOf(Priority.LOW)
+
     val searchAppBarState: MutableState<SearchAppBarState> =
         mutableStateOf(SearchAppBarState.CLOSED)
-
     val searchTextState: MutableState<String> = mutableStateOf("")
 
     private val _allTasks =
         MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Idle)
-
     val allTask: StateFlow<RequestState<List<ToDoTask>>> = _allTasks
 
     fun getAllTasks(){
