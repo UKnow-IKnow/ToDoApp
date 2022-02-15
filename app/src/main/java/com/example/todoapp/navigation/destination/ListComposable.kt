@@ -9,6 +9,7 @@ import com.example.todoapp.ui.theme.screens.list.listScreen
 import com.example.todoapp.ui.theme.viewModels.SharedViewModel
 import com.example.todoapp.util.Constants.LIST_ARGUMENT_KEY
 import com.example.todoapp.util.Constants.LIST_SCREEN
+import com.example.todoapp.util.toAction
 
 @ExperimentalMaterialApi
 fun NavGraphBuilder.listComposable(
@@ -20,7 +21,10 @@ fun NavGraphBuilder.listComposable(
         arguments = listOf(navArgument(LIST_ARGUMENT_KEY) {
             type = NavType.StringType
         })
-    ) {
+    ) { navBackStackEntry ->
+        val action = navBackStackEntry.arguments?.getString(LIST_ARGUMENT_KEY).toAction()
+
+
         listScreen(
             navigateToTaskScreen = navigateToTaskScreen,
             sharedViewModel = sharedViewModel
