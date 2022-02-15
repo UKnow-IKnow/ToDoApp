@@ -39,7 +39,7 @@ class SharedViewModel @Inject constructor(
         MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Idle)
     val allTask: StateFlow<RequestState<List<ToDoTask>>> = _allTasks
 
-    fun getAllTasks(){
+    fun getAllTasks() {
         _allTasks.value = RequestState.Loading
         try {
             viewModelScope.launch {
@@ -47,16 +47,16 @@ class SharedViewModel @Inject constructor(
                     _allTasks.value = RequestState.Success(it)
                 }
             }
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             _allTasks.value = RequestState.Error(e)
         }
     }
 
-    private val _selectedTask : MutableStateFlow<ToDoTask?> = MutableStateFlow(null)
-    val selectedTask : StateFlow<ToDoTask?> = _selectedTask
+    private val _selectedTask: MutableStateFlow<ToDoTask?> = MutableStateFlow(null)
+    val selectedTask: StateFlow<ToDoTask?> = _selectedTask
 
 
-    fun getSelectedTask(taskId : Int){
+    fun getSelectedTask(taskId: Int) {
         viewModelScope.launch {
             repository.getSelectedTask(taskId = taskId).collect { task ->
                 _selectedTask.value = task
@@ -64,7 +64,7 @@ class SharedViewModel @Inject constructor(
         }
     }
 
-    private fun addTask(){
+    private fun addTask() {
         viewModelScope.launch(Dispatchers.IO) {
             val toDoTask = ToDoTask(
                 title = title.value,
@@ -75,13 +75,37 @@ class SharedViewModel @Inject constructor(
         }
     }
 
-    fun updateTaskField(selectedTask: ToDoTask?){
-        if (selectedTask != null){
+    fun handleDatabaseActions(action: Action) {
+        when (action) {
+            Action.ADD -> {
+                addTask()
+            }
+            Action.UPDATE -> {
+
+            }
+            Action.DELETE -> {
+
+            }
+            Action.DELETE_ALL -> {
+
+            }
+            Action.UNDO -> {
+
+            }
+            else -> {
+
+            }
+        }
+        this.action.value = Action.NO_ACTION
+    }
+
+    fun updateTaskField(selectedTask: ToDoTask?) {
+        if (selectedTask != null) {
             id.value = selectedTask.id
             title.value = selectedTask.title
             description.value = selectedTask.description
             priority.value = selectedTask.priority
-        } else{
+        } else {
             id.value = 0
             title.value = ""
             description.value = ""
@@ -89,13 +113,13 @@ class SharedViewModel @Inject constructor(
         }
     }
 
-    fun updateTitle(newTitle: String){
-        if (newTitle.length < MAX_TITLE_LENGTH){
+    fun updateTitle(newTitle: String) {
+        if (newTitle.length < MAX_TITLE_LENGTH) {
             title.value = newTitle
         }
     }
 
-    fun validateField(): Boolean{
+    fun validateField(): Boolean {
         return title.value.isNotEmpty() && description.value.isNotEmpty()
     }
 }
