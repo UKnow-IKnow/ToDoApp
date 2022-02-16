@@ -18,8 +18,8 @@ import kotlinx.coroutines.launch
 fun listScreen(
     navigateToTaskScreen: (taskId: Int) -> Unit,
     sharedViewModel: SharedViewModel
-){
-    LaunchedEffect(key1 = true){
+) {
+    LaunchedEffect(key1 = true) {
         sharedViewModel.getAllTasks()
     }
 
@@ -28,7 +28,7 @@ fun listScreen(
     val allTasks by sharedViewModel.allTask.collectAsState()
 
     val searchAppBarState: SearchAppBarState
-        by sharedViewModel.searchAppBarState
+            by sharedViewModel.searchAppBarState
 
     val searchTextState: String by sharedViewModel.searchTextState
 
@@ -38,6 +38,9 @@ fun listScreen(
     DisplaySnackBar(
         scaffoldState = scaffoldState,
         handleDatabaseAction = { sharedViewModel.handleDatabaseActions(action = action) },
+        undoClicked = {
+            sharedViewModel.action.value = it
+        },
         taskTitle = sharedViewModel.title.value,
         action = action
     )
@@ -66,14 +69,15 @@ fun listScreen(
 @Composable
 fun listFab(
     onFabClick: (taskId: Int) -> Unit
-){
+) {
     FloatingActionButton(
         onClick = {
             onFabClick(-1)
         },
         backgroundColor = MaterialTheme.colors.fabButtonBackgroundColor
     ) {
-        Icon(imageVector = Icons.Filled.Add,
+        Icon(
+            imageVector = Icons.Filled.Add,
             contentDescription = stringResource(
                 id = R.string.add_Button
             ),
@@ -87,21 +91,44 @@ fun listFab(
 fun DisplaySnackBar(
     scaffoldState: ScaffoldState,
     handleDatabaseAction: () -> Unit,
+    undoClicked: (Action) -> Unit,
     taskTitle: String,
     action: Action
-){
+) {
     handleDatabaseAction()
 
     val scope = rememberCoroutineScope()
-    LaunchedEffect(key1 = action ){
-        if (action != Action.NO_ACTION){
+    LaunchedEffect(key1 = action) {
+        if (action != Action.NO_ACTION) {
             scope.launch {
                 val snackBarResult = scaffoldState.snackbarHostState.showSnackbar(
                     message = "${action.name}: $taskTitle",
-                    actionLabel = "OK"
+                    actionLabel = setActionLabel(action = action)
+                )
+                undoDeletedTask(
+                    action = action,
+                    snackBarResult = snackBarResult,
+                    undoClicked = undoClicked
                 )
             }
         }
     }
 }
 
+private fun setActionLabel(action: Action): String {
+    return if (action.name == "DELETE") {
+        "UNDO"
+    } else {
+        "OK"
+    }
+}
+
+private fun undoDeletedTask(
+    action: Action,
+    snackBarResult: SnackbarResult,
+    undoClicked: (Action) -> Unit
+) {
+    if (snackBarResult == SnackbarResult.ActionPerformed && action == Action.DELETE) {
+        undoClicked(Action.UNDO)
+    }
+}

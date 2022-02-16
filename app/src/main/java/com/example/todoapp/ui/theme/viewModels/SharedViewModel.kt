@@ -95,7 +95,7 @@ class SharedViewModel @Inject constructor(
                 description = description.value,
                 priority = priority.value
             )
-            repository.updateTask(toDoTask = toDoTask)
+            repository.deleteTask(toDoTask = toDoTask)
         }
     }
 
@@ -114,7 +114,7 @@ class SharedViewModel @Inject constructor(
 
             }
             Action.UNDO -> {
-
+                addTask()
             }
             else -> {
 
