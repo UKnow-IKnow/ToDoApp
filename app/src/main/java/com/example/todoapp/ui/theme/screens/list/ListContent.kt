@@ -21,22 +21,46 @@ import com.example.todoapp.data.models.ToDoTask
 import com.example.todoapp.ui.theme.taskItemBackgroundColor
 import com.example.todoapp.ui.theme.taskItemTextColor
 import com.example.todoapp.util.RequestState
+import com.example.todoapp.util.SearchAppBarState
 
 @ExperimentalMaterialApi
 @Composable
 fun listContent(
-    tasks: RequestState<List<ToDoTask>>,
+    allTasks: RequestState<List<ToDoTask>>,
+    searchTask: RequestState<List<ToDoTask>>,
+    searchAppBarState: SearchAppBarState,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
-    if (tasks is RequestState.Success){
-        if (tasks.data.isEmpty()){
-            EmptyContent()
-        }else {
-            DisplayTasks(
-                tasks = tasks.data,
+    if(searchAppBarState == SearchAppBarState.TRIGGERED){
+        if(searchTask is RequestState.Success){
+            HandleListContent(
+                tasks = searchTask.data,
                 navigateToTaskScreen = navigateToTaskScreen
             )
         }
+    }else {
+        if(allTasks is RequestState.Success){
+            HandleListContent(
+                tasks = allTasks.data,
+                navigateToTaskScreen = navigateToTaskScreen
+            )
+        }
+    }
+}
+
+@ExperimentalMaterialApi
+@Composable
+fun HandleListContent(
+    tasks: List<ToDoTask>,
+    navigateToTaskScreen: (taskId: Int) -> Unit
+) {
+    if (tasks.isEmpty()) {
+        EmptyContent()
+    } else {
+        DisplayTasks(
+            tasks = tasks,
+            navigateToTaskScreen = navigateToTaskScreen
+        )
     }
 }
 
