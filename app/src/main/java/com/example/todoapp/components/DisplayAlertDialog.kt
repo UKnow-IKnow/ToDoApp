@@ -1,11 +1,11 @@
 package com.example.todoapp.components
 
 
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import com.example.todoapp.R
 
 @Composable
 fun DisplayAlertDialog(
@@ -25,13 +25,28 @@ fun DisplayAlertDialog(
                 )
             },
             text = {
-                   Text(
-                       text = message,
-                       fontSize = MaterialTheme.typography.subtitle1.fontSize,
-                       fontWeight = FontWeight.Normal
-                   )
+                Text(
+                    text = message,
+                    fontSize = MaterialTheme.typography.subtitle1.fontSize,
+                    fontWeight = FontWeight.Normal
+                )
             },
-            onDismissRequest = {}
+            confirmButton = {
+                Button(onClick = {
+                    onYesClicked()
+                    closeDialog()
+                }) {
+                    Text(text = stringResource(id = R.string.yes))
+                }
+            },
+            dismissButton = {
+                OutlinedButton(onClick = {
+                    closeDialog()
+                }) {
+                    Text(text = stringResource(id = R.string.no))
+                }
+            },
+            onDismissRequest = { closeDialog() }
         )
     }
 }
