@@ -9,7 +9,7 @@ enum class Action {
     NO_ACTION
 }
 
-fun String?.toAction(): Action{
+fun String?.toAction(): Action {
     return when {
         this == "ADD" -> {
             Action.ADD

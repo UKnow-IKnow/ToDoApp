@@ -24,7 +24,7 @@ fun TaskContent(
     onDescriptionChange: (String) -> Unit,
     priority: Priority,
     onPrioritySelected: (Priority) -> Unit
-){
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -35,7 +35,7 @@ fun TaskContent(
             modifier = Modifier.fillMaxWidth(),
             value = title,
             onValueChange = { onTitleChange(it) },
-            label = { Text(text = stringResource(id = R.string.title))},
+            label = { Text(text = stringResource(id = R.string.title)) },
             textStyle = MaterialTheme.typography.body1,
             singleLine = true
         )
@@ -50,8 +50,8 @@ fun TaskContent(
         OutlinedTextField(
             modifier = Modifier.fillMaxSize(),
             value = description,
-            onValueChange = {onDescriptionChange(it)},
-            label = { Text(text = stringResource(id =R.string.description))},
+            onValueChange = { onDescriptionChange(it) },
+            label = { Text(text = stringResource(id = R.string.description)) },
             textStyle = MaterialTheme.typography.body1
         )
     }
@@ -60,7 +60,7 @@ fun TaskContent(
 
 @Composable
 @Preview
-private fun TaskContentPreview(){
+private fun TaskContentPreview() {
     TaskContent(
         title = "",
         onTitleChange = {},

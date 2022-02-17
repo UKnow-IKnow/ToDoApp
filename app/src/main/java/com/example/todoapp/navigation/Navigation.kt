@@ -15,7 +15,7 @@ import com.example.todoapp.util.Constants.LIST_SCREEN
 fun setupNavigation(
     navController: NavHostController,
     sharedViewModel: SharedViewModel
-){
+) {
     val screen = remember(navController) {
         Screens(navController = navController)
     }
@@ -23,7 +23,7 @@ fun setupNavigation(
     NavHost(
         navController = navController,
         startDestination = LIST_SCREEN
-    ){
+    ) {
         listComposable(
             navigateToTaskScreen = screen.task,
             sharedViewModel = sharedViewModel

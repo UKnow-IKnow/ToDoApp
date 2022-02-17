@@ -16,20 +16,20 @@ import com.example.todoapp.util.Constants.TASK_ARGUMENT_KEY
 fun NavGraphBuilder.taskComposable(
     sharedViewModel: SharedViewModel,
     navigateToListScreen: (Action) -> Unit
-){
+) {
     composable(
         route = Constants.TASK_SCREEN,
-        arguments = listOf(navArgument(Constants.TASK_ARGUMENT_KEY){
+        arguments = listOf(navArgument(Constants.TASK_ARGUMENT_KEY) {
             type = NavType.IntType
         })
-    ){ navBackStackEntry ->
+    ) { navBackStackEntry ->
         val taskId = navBackStackEntry.arguments!!.getInt(TASK_ARGUMENT_KEY)
         sharedViewModel.getSelectedTask(taskId = taskId)
 
         val selectedTask by sharedViewModel.selectedTask.collectAsState()
 
-        LaunchedEffect(key1 = selectedTask ) {
-            if (selectedTask != null || taskId == -1){
+        LaunchedEffect(key1 = selectedTask) {
+            if (selectedTask != null || taskId == -1) {
                 sharedViewModel.updateTaskField(selectedTask = selectedTask)
             }
 

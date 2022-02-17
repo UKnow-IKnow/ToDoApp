@@ -22,9 +22,9 @@ fun TaskAppBar(
     selectedTask: ToDoTask?,
     navigateToListScreen: (Action) -> Unit
 ) {
-    if (selectedTask == null){
+    if (selectedTask == null) {
         NewTaskAppBar(navigateToListScreen = navigateToListScreen)
-    }else{
+    } else {
         ExistingTaskAppBar(
             selectedTask = selectedTask,
             navigateToListScreen = navigateToListScreen
@@ -35,7 +35,7 @@ fun TaskAppBar(
 
 @Composable
 fun NewTaskAppBar(
-    navigateToListScreen : (Action) -> Unit
+    navigateToListScreen: (Action) -> Unit
 ) {
     TopAppBar(
         navigationIcon = {
@@ -84,7 +84,7 @@ fun AddAction(
 @Composable
 fun ExistingTaskAppBar(
     selectedTask: ToDoTask,
-    navigateToListScreen : (Action) -> Unit
+    navigateToListScreen: (Action) -> Unit
 ) {
     TopAppBar(
         navigationIcon = {
@@ -148,13 +148,13 @@ fun UpdateAction(
 
 @Composable
 @Preview
-fun NewTaskAppBarPreview(){
+fun NewTaskAppBarPreview() {
     NewTaskAppBar(navigateToListScreen = {})
 }
 
 @Composable
 @Preview
-fun ExistingTaskAppBarPreview(){
+fun ExistingTaskAppBarPreview() {
     ExistingTaskAppBar(
         selectedTask = ToDoTask(
             id = 0,

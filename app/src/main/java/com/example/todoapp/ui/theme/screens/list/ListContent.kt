@@ -31,15 +31,15 @@ fun listContent(
     searchAppBarState: SearchAppBarState,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
-    if(searchAppBarState == SearchAppBarState.TRIGGERED){
-        if(searchTask is RequestState.Success){
+    if (searchAppBarState == SearchAppBarState.TRIGGERED) {
+        if (searchTask is RequestState.Success) {
             HandleListContent(
                 tasks = searchTask.data,
                 navigateToTaskScreen = navigateToTaskScreen
             )
         }
-    }else {
-        if(allTasks is RequestState.Success){
+    } else {
+        if (allTasks is RequestState.Success) {
             HandleListContent(
                 tasks = allTasks.data,
                 navigateToTaskScreen = navigateToTaskScreen

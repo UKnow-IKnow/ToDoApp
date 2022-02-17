@@ -37,9 +37,9 @@ import com.example.todoapp.util.TrailingIconState
 fun ListAppBar(
     sharedViewModel: SharedViewModel,
     searchAppBarState: SearchAppBarState,
-    searchTextState : String
+    searchTextState: String
 ) {
-    when(searchAppBarState){
+    when (searchAppBarState) {
         SearchAppBarState.CLOSED -> {
             DefaultListAppBar(
                 onSearchClicked = {
@@ -53,9 +53,9 @@ fun ListAppBar(
         else -> {
             SearchAppBar(
                 text = searchTextState,
-                onTextChange = {newText ->
+                onTextChange = { newText ->
                     sharedViewModel.searchTextState.value = newText
-                } ,
+                },
                 onClosedClicked = {
                     sharedViewModel.searchAppBarState.value =
                         SearchAppBarState.CLOSED
@@ -79,7 +79,7 @@ fun DefaultListAppBar(
     TopAppBar(
         title = {
             Text(
-                text = stringResource(id = R.string.list_Screen_Title)   ,
+                text = stringResource(id = R.string.list_Screen_Title),
                 color = MaterialTheme.colors.topAppBarContentColor
             )
         },
@@ -110,7 +110,7 @@ fun SearchAction(
     onSearchClicked: () -> Unit
 ) {
     IconButton(
-        onClick = { onSearchClicked () }
+        onClick = { onSearchClicked() }
     ) {
         Icon(
             imageVector = Icons.Filled.Search,
@@ -201,13 +201,14 @@ fun DeleteAllAction(
         }
     }
 }
+
 @Composable
 fun SearchAppBar(
     text: String,
     onTextChange: (String) -> Unit,
-    onClosedClicked: () ->Unit,
+    onClosedClicked: () -> Unit,
     onSearchClicked: (String) -> Unit
-){
+) {
     var trailingIconState by remember {
         mutableStateOf(TrailingIconState.READY_TO_DELETE)
     }
@@ -255,15 +256,15 @@ fun SearchAppBar(
             trailingIcon = {
                 IconButton(
                     onClick = {
-                        when(trailingIconState){
+                        when (trailingIconState) {
                             TrailingIconState.READY_TO_DELETE -> {
                                 onTextChange("")
                                 trailingIconState = TrailingIconState.READY_TO_CLOSE
                             }
                             TrailingIconState.READY_TO_CLOSE -> {
-                                if(text.isNotEmpty()){
+                                if (text.isNotEmpty()) {
                                     onTextChange("")
-                                }else{
+                                } else {
                                     onClosedClicked()
                                     trailingIconState = TrailingIconState.READY_TO_DELETE
                                 }
@@ -309,11 +310,11 @@ private fun DefaultListAppbarPreview() {
 
 @Composable
 @Preview
-private fun SearchAppBarPreview(){
-     SearchAppBar(
-         text = "",
-         onTextChange = {} ,
-         onClosedClicked = {},
-         onSearchClicked = {}
-     )
+private fun SearchAppBarPreview() {
+    SearchAppBar(
+        text = "",
+        onTextChange = {},
+        onClosedClicked = {},
+        onSearchClicked = {}
+    )
 }
