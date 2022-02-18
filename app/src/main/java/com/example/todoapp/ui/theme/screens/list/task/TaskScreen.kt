@@ -2,6 +2,7 @@ package com.example.todoapp.ui.theme.screens.list.task
 
 import android.content.Context
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,6 +24,10 @@ fun TaskScreen(
     val priority: Priority by sharedViewModel.priority
 
     val context = LocalContext.current
+
+    BackHandler {
+        navigateToListScreen(Action.NO_ACTION)
+    }
 
     Scaffold(
         topBar = {
