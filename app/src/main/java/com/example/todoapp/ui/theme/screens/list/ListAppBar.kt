@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.example.todoapp.ui.theme.topAppBarBackgroundColor
 import com.example.todoapp.ui.theme.topAppBarContentColor
 import com.example.todoapp.R
+import com.example.todoapp.components.DisplayAlertDialog
 import com.example.todoapp.components.PriorityItem
 import com.example.todoapp.data.models.Priority
 import com.example.todoapp.ui.theme.Typography
@@ -103,9 +104,23 @@ fun ListAppBarActions(
     onSortClicked: (Priority) -> Unit,
     onDeleteAllClicked: () -> Unit
 ) {
+    var openDialog by remember {
+        mutableStateOf(false)
+    }
+
+    DisplayAlertDialog(
+        title = stringResource(id = R.string.delete_all_task),
+        message = stringResource(id = R.string.delete_task_confirmation),
+        openDialog = openDialog,
+        closeDialog = { openDialog = false },
+        onYesClicked = { onDeleteAllClicked()}
+    )
+
     SearchAction(onSearchClicked = onSearchClicked)
     SortAction(onSortClicked = onSortClicked)
-    DeleteAllAction(onDeleteAllClicked = onDeleteAllClicked)
+    DeleteAllAction(onDeleteAllClicked = {
+        openDialog = true
+    })
 }
 
 @Composable
