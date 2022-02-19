@@ -110,7 +110,7 @@ fun ListAppBarActions(
 
     DisplayAlertDialog(
         title = stringResource(id = R.string.delete_all_task),
-        message = stringResource(id = R.string.delete_task_confirmation),
+        message = stringResource(id = R.string.delete_all_task_confirmation),
         openDialog = openDialog,
         closeDialog = { openDialog = false },
         onYesClicked = { onDeleteAllClicked()}
