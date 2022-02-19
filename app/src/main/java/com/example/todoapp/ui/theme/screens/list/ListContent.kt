@@ -29,23 +29,45 @@ fun listContent(
     allTasks: RequestState<List<ToDoTask>>,
     searchTask: RequestState<List<ToDoTask>>,
     searchAppBarState: SearchAppBarState,
+    lowPriorityTask: List<ToDoTask>,
+    highPriorityTask: List<ToDoTask>,
+    sortState: RequestState<Priority>,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
-    if (searchAppBarState == SearchAppBarState.TRIGGERED) {
-        if (searchTask is RequestState.Success) {
-            HandleListContent(
-                tasks = searchTask.data,
-                navigateToTaskScreen = navigateToTaskScreen
-            )
+    if (sortState is RequestState.Success) {
+        when {
+            searchAppBarState == SearchAppBarState.TRIGGERED -> {
+                if (searchTask is RequestState.Success) {
+                    HandleListContent(
+                        tasks = searchTask.data,
+                        navigateToTaskScreen = navigateToTaskScreen
+                    )
+                }
+            }
+            sortState.data == Priority.NONE -> {
+                if (allTasks is RequestState.Success) {
+                    HandleListContent(
+                        tasks = allTasks.data,
+                        navigateToTaskScreen = navigateToTaskScreen
+                    )
+                }
+            }
+            sortState.data == Priority.LOW -> {
+                HandleListContent(
+                    tasks = lowPriorityTask,
+                    navigateToTaskScreen = navigateToTaskScreen
+                )
+            }
+            sortState.data == Priority.HIGH -> {
+                HandleListContent(
+                    tasks = highPriorityTask,
+                    navigateToTaskScreen = navigateToTaskScreen
+                )
+            }
         }
-    } else {
-        if (allTasks is RequestState.Success) {
-            HandleListContent(
-                tasks = allTasks.data,
-                navigateToTaskScreen = navigateToTaskScreen
-            )
-        }
+
     }
+
 }
 
 @ExperimentalMaterialApi
