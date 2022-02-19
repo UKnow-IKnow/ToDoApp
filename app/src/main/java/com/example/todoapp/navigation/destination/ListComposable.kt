@@ -1,5 +1,6 @@
 package com.example.todoapp.navigation.destination
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavGraphBuilder
@@ -12,6 +13,7 @@ import com.example.todoapp.util.Constants.LIST_ARGUMENT_KEY
 import com.example.todoapp.util.Constants.LIST_SCREEN
 import com.example.todoapp.util.toAction
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 fun NavGraphBuilder.listComposable(
     navigateToTaskScreen: (taskId: Int) -> Unit,
