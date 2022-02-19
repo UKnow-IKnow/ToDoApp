@@ -1,5 +1,6 @@
 package com.example.todoapp.ui.theme.screens.list
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -9,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -22,8 +24,10 @@ import androidx.compose.ui.unit.dp
 import com.example.todoapp.R
 import com.example.todoapp.data.models.Priority
 import com.example.todoapp.data.models.ToDoTask
+import com.example.todoapp.ui.theme.HighPriorityColor
 import com.example.todoapp.ui.theme.taskItemBackgroundColor
 import com.example.todoapp.ui.theme.taskItemTextColor
+import com.example.todoapp.util.Action
 import com.example.todoapp.util.RequestState
 import com.example.todoapp.util.SearchAppBarState
 
@@ -36,6 +40,7 @@ fun listContent(
     lowPriorityTask: List<ToDoTask>,
     highPriorityTask: List<ToDoTask>,
     sortState: RequestState<Priority>,
+    onSwipeToDelete: (Action, ToDoTask) -> Unit,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
     if (sortState is RequestState.Success) {
@@ -44,6 +49,7 @@ fun listContent(
                 if (searchTask is RequestState.Success) {
                     HandleListContent(
                         tasks = searchTask.data,
+                        onSwipeToDelete = onSwipeToDelete,
                         navigateToTaskScreen = navigateToTaskScreen
                     )
                 }
@@ -52,6 +58,7 @@ fun listContent(
                 if (allTasks is RequestState.Success) {
                     HandleListContent(
                         tasks = allTasks.data,
+                        onSwipeToDelete = onSwipeToDelete,
                         navigateToTaskScreen = navigateToTaskScreen
                     )
                 }
@@ -59,12 +66,14 @@ fun listContent(
             sortState.data == Priority.LOW -> {
                 HandleListContent(
                     tasks = lowPriorityTask,
+                    onSwipeToDelete = onSwipeToDelete,
                     navigateToTaskScreen = navigateToTaskScreen
                 )
             }
             sortState.data == Priority.HIGH -> {
                 HandleListContent(
                     tasks = highPriorityTask,
+                    onSwipeToDelete = onSwipeToDelete,
                     navigateToTaskScreen = navigateToTaskScreen
                 )
             }
@@ -78,6 +87,7 @@ fun listContent(
 @Composable
 fun HandleListContent(
     tasks: List<ToDoTask>,
+    onSwipeToDelete: (Action, ToDoTask) -> Unit,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
     if (tasks.isEmpty()) {
@@ -85,6 +95,7 @@ fun HandleListContent(
     } else {
         DisplayTasks(
             tasks = tasks,
+            onSwipeToDelete = onSwipeToDelete,
             navigateToTaskScreen = navigateToTaskScreen
         )
     }
@@ -94,6 +105,7 @@ fun HandleListContent(
 @Composable
 fun DisplayTasks(
     tasks: List<ToDoTask>,
+    onSwipeToDelete: (Action, ToDoTask) -> Unit,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
     LazyColumn {
@@ -103,22 +115,46 @@ fun DisplayTasks(
                 task.id
             }
         ) { task ->
-            TaskItem(
-                toDoTask = task,
-                navigateToTaskScreen = navigateToTaskScreen
+            val dismissState = rememberDismissState()
+            val dismissDirection = dismissState.dismissDirection
+            val isDismissed = dismissState.isDismissed(DismissDirection.EndToStart)
+
+            if (isDismissed && dismissDirection == DismissDirection.EndToStart){
+                onSwipeToDelete(Action.DELETE, task)
+            }
+
+            val degree by animateFloatAsState(
+                if (dismissState.targetValue == DismissValue.Default)
+                    0f
+                else
+                    -45f
+            )
+
+            SwipeToDismiss(
+                state = dismissState,
+                directions = setOf(DismissDirection.EndToStart),
+                dismissThresholds = { FractionalThreshold(fraction = 0.25f) },
+                background = { RedBackground(degree = degree) },
+                dismissContent = {
+                    TaskItem(
+                        toDoTask = task,
+                        navigateToTaskScreen = navigateToTaskScreen
+                    )
+                }
             )
         }
     }
 }
 
 @Composable
-fun RedBackground(degree: Float){
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(Color.Red)
-        .padding(horizontal = 24.dp),
+fun RedBackground(degree: Float) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(HighPriorityColor)
+            .padding(horizontal = 24.dp),
         contentAlignment = Alignment.CenterEnd
-    ){
+    ) {
         Icon(
             modifier = Modifier.rotate(degrees = degree),
             imageVector = Icons.Filled.Delete,
