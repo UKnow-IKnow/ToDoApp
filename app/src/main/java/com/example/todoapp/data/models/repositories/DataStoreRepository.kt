@@ -37,6 +37,7 @@ class DataStoreRepository @Inject constructor(
         }
     }
 
+
     val readSortState: Flow<String> = dataStore.data
         .catch { exception ->
             if(exception is IOException){
