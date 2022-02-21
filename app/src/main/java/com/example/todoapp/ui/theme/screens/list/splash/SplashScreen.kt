@@ -34,19 +34,19 @@ fun SplashScreen(
     val offsetState by animateDpAsState(
         targetValue = if (startAnimation) 0.dp else 100.dp,
         animationSpec = tween(
-            durationMillis = 500
+            durationMillis = 700
         )
     )
     val alphaState by animateFloatAsState(
         targetValue = if (startAnimation) 1f else 0f,
         animationSpec = tween(
-            durationMillis = 500
+            durationMillis = 700
         )
     )
 
     LaunchedEffect(key1 = true) {
         startAnimation = true
-        delay(1000)
+        delay(1400)
         navigateToListScreen()
     }
     Box(
