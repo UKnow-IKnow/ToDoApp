@@ -1,13 +1,11 @@
 package com.example.todoapp.navigation.destination
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.composable
 import com.example.todoapp.ui.theme.screens.list.splash.SplashScreen
 import com.example.todoapp.util.Constants.SPLASH
-import com.google.accompanist.navigation.animation.composable
 
 
-@ExperimentalAnimationApi
 fun NavGraphBuilder.splashComposable(
     navigateToListScreen: () -> Unit
 ){

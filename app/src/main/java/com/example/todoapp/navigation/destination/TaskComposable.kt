@@ -1,14 +1,12 @@
 package com.example.todoapp.navigation.destination
 
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
-import com.google.accompanist.navigation.animation.composable
-import androidx.navigation.compose.navArgument
+import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.todoapp.ui.theme.screens.list.task.TaskScreen
 import com.example.todoapp.ui.theme.viewModels.SharedViewModel
@@ -17,7 +15,6 @@ import com.example.todoapp.util.Constants
 import com.example.todoapp.util.Constants.TASK_ARGUMENT_KEY
 
 
-@ExperimentalAnimationApi
 fun NavGraphBuilder.taskComposable(
     sharedViewModel: SharedViewModel,
     navigateToListScreen: (Action) -> Unit

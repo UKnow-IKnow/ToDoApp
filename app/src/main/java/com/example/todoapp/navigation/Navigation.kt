@@ -10,9 +10,8 @@ import com.example.todoapp.navigation.destination.listComposable
 import com.example.todoapp.navigation.destination.splashComposable
 import com.example.todoapp.navigation.destination.taskComposable
 import com.example.todoapp.ui.theme.viewModels.SharedViewModel
-import com.example.todoapp.util.Constants.LIST_SCREEN
 import com.example.todoapp.util.Constants.SPLASH
-import com.google.accompanist.navigation.animation.AnimatedNavHost
+
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
@@ -25,7 +24,7 @@ fun setupNavigation(
         Screens(navController = navController)
     }
 
-    AnimatedNavHost(
+    NavHost(
         navController = navController,
         startDestination = SPLASH
     ) {
