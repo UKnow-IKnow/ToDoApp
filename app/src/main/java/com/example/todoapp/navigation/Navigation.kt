@@ -11,6 +11,7 @@ import com.example.todoapp.navigation.destination.splashComposable
 import com.example.todoapp.navigation.destination.taskComposable
 import com.example.todoapp.ui.theme.viewModels.SharedViewModel
 import com.example.todoapp.util.Constants.SPLASH
+import com.google.accompanist.navigation.animation.AnimatedNavHost
 
 
 @ExperimentalAnimationApi
@@ -24,7 +25,7 @@ fun setupNavigation(
         Screens(navController = navController)
     }
 
-    NavHost(
+    AnimatedNavHost(
         navController = navController,
         startDestination = SPLASH
     ) {
